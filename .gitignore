@@ -1,2 +1,9 @@
-.DS_Store
+# Node build artifacts
 node_modules
+npm-debug.log
+
+# Local environment
+*.env
+*.dev
+
+*.DS_Store
