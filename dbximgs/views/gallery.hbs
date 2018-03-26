@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="/galleria/galleria-1.5.7.min.js"></script>
-    <script src="/javascripts/page.js"></script>
-    <link href="/stylesheets/page.css"></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+    <script src='/galleria/galleria-1.5.7.min.js'></script>
+    <script src='/javascripts/page.js'></script>
+    <link rel='stylesheet' href='/stylesheets/page.css'>
   </head>
   
   <body>
     <div class="galleria">
-      <img src="">
+      {{#each imgs}}
+      <img src="{{this}}">
+      {{/each}}
     </div>
   </body>
 </html>
