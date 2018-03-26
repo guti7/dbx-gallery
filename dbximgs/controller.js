@@ -13,3 +13,21 @@ module.exports.home = (req, res, next) => {
     res.redirect('/login');
   }
 };
+
+module.exports.login = (req, res, next) => {
+  // Random state value
+  let state = crypto.randomBytes(16).toString('hex');
+  // Save the state and tempSession
+  mycache.set(state, 'aTempSessionValue', 300);
+  
+  let dbxRedirect = config.DBX_OAUTH_DOMAIN +
+                    config.DBX_OAUTH_PATH + 
+                    "?response_type=code&client_id=" +
+                    config.DBX_APP_KEY +
+                    "&redirect_uri=" +
+                    config.OAUTH_REDIRECT_URL +
+                    "&state=" +
+                    state;
+                    
+  res.redirect(dbxRedirect);
+}
