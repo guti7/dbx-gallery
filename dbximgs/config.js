@@ -1,4 +1,4 @@
-require('dotenv').config(silent: true});
+require('dotenv').config({silent: true});
 
 module.exports = {
   DBX_API_DOMAIN:     'https://api.dropboxapi.com',
