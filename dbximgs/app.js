@@ -9,7 +9,8 @@ var usersRouter = require('./routes/users');
 var app = express();
 
 var redis = require('redis');
-var client = redis.createClient();
+// var client = redis.createClient();
+var client = redis.createClient(process.env.REDIS_URL);
 var crypto = require('crypto');
 var session = require('express-session');
 
