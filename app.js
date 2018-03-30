@@ -9,10 +9,10 @@ var usersRouter = require('./routes/users');
 var app = express();
 
 var redis = require('redis');
-// var client = redis.createClient();
 var client = redis.createClient(process.env.REDIS_URL);
 var crypto = require('crypto');
 var session = require('express-session');
+var helmet = require('helmet');
 
 var config = require('./config');
 
@@ -31,6 +31,23 @@ var sess = {
     collection: 'sessions' //optional
   })
 }
+
+// Headers security
+app.use(helmet());
+
+// Implement CSP with Helmet
+app.use(helmet.contentSecurityPolicy({
+  directives: {
+    defaultSrc: ["'self'"],
+    scriptSrc: ["'self'", "https://ajax.googleapis.com/"],
+    styleSrc: ["'self'"],
+    imgSrc: ["'self'", "https://dl.dropboxusercontent.com"],
+    mediaSrc: ["'none'"],
+    frameSrc: ["'none'"]
+  },
+  // Set all headers: Content-Security-Policy, X-WebKit-CSP, X-Content-Security-Policy
+  setAllHeaders: true
+}));
 
 app.use(session(sess));
 // view engine setup
