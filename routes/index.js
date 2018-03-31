@@ -11,4 +11,7 @@ router.get('/login', controller.login);
 /* GET oauth redirect */
 router.get('/oauthredirect', controller.oauthredirect);
 
+/* GET logout */
+router.get('/logout', controller.logout);
+
 module.exports = router;

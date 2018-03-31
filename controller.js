@@ -86,6 +86,42 @@ module.exports.oauthredirect = async (req, res, next) => {
   }
 };
 
+module.exports.logout = async (req, res, next) => {
+  try {
+    await destroySessionAsync(req);
+    res.redirect('/login');
+  } catch(error) {
+    return next(new Error('Error logging out: /logout. ' + error.message));
+  }
+};
+
+/*
+* Returns a promise that fulfills when a session is destroyed
+*/
+function destroySessionAsync(req) {
+
+  return new Promise(async (resolve, reject) => {
+
+    try {
+      // Revoke token in dropbox.com
+      let options = {
+        url: config.DBX_API_DOMAIN + config.DBX_TOKEN_REVOKE_PATH,
+        headers: {'Authorization': 'Bearer ' + req.session.token},
+        method: 'POST'
+      }
+
+      let result = await reqpromise(options);
+    } catch(eror) {
+      reject(new Error('Error destroying token - destroySessionAsync.'));
+    }
+
+    // Destroy session
+    req.session.destroy( (err) => {
+      err ? reject(err) : resolve();
+    });
+  });
+}
+
 /*
 * Returns a promise that fulfills when a new session is created
 */
